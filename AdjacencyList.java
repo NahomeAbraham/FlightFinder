@@ -24,7 +24,11 @@ public class AdjacencyList {
                 int cost = Integer.parseInt(data[2]);
                 int time = Integer.parseInt(data[3]);
 
-                if (adjacencyList.isEmpty()) {                    
+                if (adjacencyList.isEmpty()) {  
+                    //if adjacency list is empty, this must be the first data line
+                    //meaning these two cities are new entities and must both be added to the AdjList
+                    //city1 is data[0], city2 is data[1], cost and time are data[3 and 4]
+                    
                     CityObject city1 = new CityObject(data[0], 0, 0, 0);
                     city1.getConnectingCities().add(new CityObject(data[1], cost, time, 0));
                 
@@ -35,11 +39,16 @@ public class AdjacencyList {
                     adjacencyList.add(city2);
 
                 } else {
+                    //else there is already an adjList and we must check if the new data line is
+                    //a new city, if it is not a new city, we must add the new adjacency to the reused city adjList
                     if (!containsNode(data[0])) 
                         adjacencyList.add(new CityObject(data[0], 0, 0, adjacencyList.size()));
 
                     if (!containsNode(data[1])) 
                         adjacencyList.add(new CityObject(data[1], 0, 0, adjacencyList.size()));
+
+                    //now we have 2 new city entities if data[0 and 1] are not already nodes
+                    //if ome of them was already a node, we must find that cities adjList and add the adjacency
 
                     for (int i = 0; i < adjacencyList.size(); i++) {
                         int size = adjacencyList.get(i).getConnectingCities().size();
